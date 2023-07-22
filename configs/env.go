@@ -3,24 +3,35 @@ package configs
 import (
 	"log"
 	"os"
-
-	"github.com/joho/godotenv"
 )
 
 func EnvMongoURI() string {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("error loading env")
+	/*
+		err := godotenv.Load()
+		if err != nil {
+			log.Fatal("error loading env")
+		}
+	*/
+
+	mongoURI := os.Getenv("MONGO_URI")
+	if mongoURI == "" {
+		log.Fatal("MONGO_URI not set in environment")
 	}
 
-	return os.Getenv("MONGO_URI")
+	return mongoURI
 }
 
 func EnvJWTSecret() []byte {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("error loading env")
+	/*
+		err := godotenv.Load()
+		if err != nil {
+			log.Fatal("error loading env")
+		}
+	*/
+	jwtSecret := os.Getenv("JWT_SECRET")
+	if jwtSecret == "" {
+		log.Fatal("JWT_SECRET not set in environment")
 	}
 
-	return []byte(os.Getenv("JWT_SECRET"))
+	return []byte(jwtSecret)
 }
